@@ -1,6 +1,6 @@
 {
-  "name": "cypress-plugin-signalr",
-  "version": "1.3.5",
+  "name": "cypress-plugin-signalr-2",
+  "version": "2.0.0",
   "description": "Verify and publish actions from and to your SignalR hubs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/basslagter/cypress-plugin-signalr.git"
+    "url": "git+https://github.com/MatthewJAllen/cypress-plugin-signalr.git"
   },
   "keywords": [
     "cypress",
@@ -25,13 +25,13 @@
   "author": "Bas Slagter",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/basslagter/cypress-plugin-signalr/issues"
+    "url": "https://github.com/MatthewJAllen/cypress-plugin-signalr/issues"
   },
-  "homepage": "https://github.com/basslagter/cypress-plugin-signalr#readme",
+  "homepage": "https://github.com/MatthewJAllen/cypress-plugin-signalr#readme",
   "devDependencies": {
-    "@types/node": "^13.13.4",
-    "cypress": "^4.5.0",
-    "standard-version": "^8.0.1",
-    "typescript": "^3.8.3"
+    "@types/node": "^22.1.0 ",
+    "cypress": "^13.13.2",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.5.4"
   }
 }

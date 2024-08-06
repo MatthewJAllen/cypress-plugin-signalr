@@ -6,8 +6,8 @@ export class SignalRMock {
     addSubscriber({ action, callback });
   }
 
-  invoke<T = any>(action: string, ...args: any) : Promise<T> {
-    return new Promise<T>((resolve) => {
+  invoke<T = any>(action: string, ...args: any): Promise<T | void> {
+    return new Promise<T | void>((resolve) => {
       addInvoke({ action, args });
       resolve();
     });

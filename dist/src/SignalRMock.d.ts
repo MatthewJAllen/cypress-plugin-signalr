@@ -1,6 +1,6 @@
 export declare class SignalRMock {
     on(action: string, callback: (...args: any) => void): void;
-    invoke<T = any>(action: string, ...args: any): Promise<T>;
+    invoke<T = any>(action: string, ...args: any): Promise<T | void>;
     off(action: string, callback: (args: any[]) => void): void;
     onclose(callback?: (error?: Error) => void): void;
     start(): Promise<void>;
