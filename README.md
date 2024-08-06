@@ -13,6 +13,8 @@
 <h1>cypress-plugin-signalr</h1>
 <p>Verify and publish actions from and to your SignalR hubs</p>
 
+<p>This is a fork of the original package by <b>Bas Slagter (@basslagter)</b> with packages updates to latest versions to resolve vulnerabilities</p>
+
 ## Table of Contents
 
 1. [Install](#install)
@@ -43,15 +45,17 @@ SignalR hub.
 <h2 align="center">Get started</h2>
 
 After installing the package include an import in the cypress/support/index.js file, like:
+
 ```javascript
-import 'cypress-plugin-signalr';
+import "cypress-plugin-signalr";
 ```
+
 The plugin exposes the SignalRMock on the global object as 'signalrMock';
 You can decide for yourself how to use this object in your app but in most cases you probably
 want to pass it to your application, for example on the window object, like:
 
 ```javascript
-Cypress.Commands.overwrite('visit', (originalFn, url) => {
+Cypress.Commands.overwrite("visit", (originalFn, url) => {
   return originalFn(url, {
     onBeforeLoad(window) {
       window.signalrMock = signalrMock;
@@ -59,73 +63,72 @@ Cypress.Commands.overwrite('visit', (originalFn, url) => {
   });
 });
 ```
+
 In your app you have to take this object and use it when defined, like:
 
 ```javascript
-const connection = window.signalrMock || new signalR.HubConnectionBuilder()
-    .withUrl(hubUrl)
-    .build();
+const connection =
+  window.signalrMock ||
+  new signalR.HubConnectionBuilder().withUrl(hubUrl).build();
 ```
 
 <h2 align="center">Usage</h2>
 
 Within cypress you now have three new commands:
 <br/><br/>
+
 1. hubPublish
-This command publishes the specified action with the specified attribute, like:
+   This command publishes the specified action with the specified attribute, like:
 
 ```javascript
-  it('should publish an action', () => {
-    cy
-      .hubPublish('notification:receive', 'My notification');
-  });
+it("should publish an action", () => {
+  cy.hubPublish("notification:receive", "My notification");
+});
 ```
 
 This will execute the code in registered subscribers, like:
 
 ```javascript
-    connection.on('notification:receive', (message) => {
-      console.log(message); // logs: 'My notification'
-    });
+connection.on("notification:receive", (message) => {
+  console.log(message); // logs: 'My notification'
+});
 ```
 
 2. hubVerify
-This command verifies that a specific message is invoked, like:
+   This command verifies that a specific message is invoked, like:
 
 ```javascript
-  it('should invoke an action', () => {
-    cy
-      .hubVerify('DeleteNotification', 1, (invokes) => {
-        expect(invokes[0].args[0]).to.equal(123);
-      });
+it("should invoke an action", () => {
+  cy.hubVerify("DeleteNotification", 1, (invokes) => {
+    expect(invokes[0].args[0]).to.equal(123);
   });
+});
 ```
+
 As you can see it provides you with the invocations occurred for this action.
 An action is invoked with SignalR like:
 
 ```javascript
-   connection.invoke('DeleteNotification', 123);
+connection.invoke("DeleteNotification", 123);
 ```
 
 3. hubClear
-This command clears the current state of the mock. this is most likely used to clear invocations between tests.
-You can call this command after each test, like:
+   This command clears the current state of the mock. this is most likely used to clear invocations between tests.
+   You can call this command after each test, like:
 
 ```javascript
-  afterEach(() => {
-      cy
-        .hubClear();
-  });
+afterEach(() => {
+  cy.hubClear();
+});
 ```
 
 Optionally you can specify whether you want to clear both the invokes as the subscribers, like:
 
 ```javascript
-  afterEach(() => {
-      cy
-        .hubClear({
-            subscribers: false,
-            invokes: true, // default
-         });
+afterEach(() => {
+  cy.hubClear({
+    subscribers: false,
+    invokes: true, // default
   });
+});
 ```
